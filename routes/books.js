@@ -69,7 +69,7 @@ router.get('/:bookId', function (req, res, next) {
       results.forEach((result, index) => {
         result['authors'] = authorsList[index];
       });
-      return res.json({status: "success", data: results});
+      return res.json({status: "success", data: results[0]});
     })
 
   })
