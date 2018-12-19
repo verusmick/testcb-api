@@ -56,6 +56,25 @@ router.put('/:bookId', function (req, res, next) {
   })
 });
 
+router.get('/:bookId', function (req, res, next) {
+  let body = req.body,  bookId = req.params.bookId;
+  var query = `SELECT * FROM book WHERE book_id = '${bookId}'`;
+  testDB.query(query, function (err, results) {
+    if (err) throw err
+    let promises = [];
+    results.forEach(book => {
+      promises.push(getAuthorBook(book.book_id));
+    });
+    Promise.all(promises).then((authorsList) => {
+      results.forEach((result, index) => {
+        result['authors'] = authorsList[index];
+      });
+      return res.json({status: "success", data: results});
+    })
+
+  })
+});
+
 
 function getAuthorBook(bookId) {
   return new Promise((resolve, reject) => {
