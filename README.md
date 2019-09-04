@@ -1,4 +1,4 @@
-Coding Bang Test - API
+API
 ==================
 
 Prerequisites
